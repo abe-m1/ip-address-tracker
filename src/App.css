@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  position: relative;
 }
 
 .App-logo {
@@ -35,4 +36,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.header {
+  background: url('./images/pattern-bg.png') no-repeat top center;
+  height: 30vh;
 }

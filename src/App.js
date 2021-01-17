@@ -1,13 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import Search from './components/Search';
+import Map from './components/Map';
+import Header from './components/Header';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>IP Address Tracker</p>
-      </header>
-
+      <Header />
+      <Search />
+      <Map />
       {/* 
 
 Search for any IP address or domain
