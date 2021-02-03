@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 
-const Header = () => {
+const Header = ({ submitSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const submitSearch = (data) => {
-    console.log('DATA', data);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    submitSearch(searchTerm);
   };
   return (
     <header className="header">
       <p>IP Address Tracker</p>
       <form>
         <input onChange={(e) => setSearchTerm(e.target.value)} />
-        <button onClick={submitSearch}>Submit</button>
+        <button onClick={onSubmit}>Submit</button>
       </form>
     </header>
   );

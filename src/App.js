@@ -1,29 +1,70 @@
 import logo from './logo.svg';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './App.css';
 import Search from './components/Search';
 import Map from './components/Map';
 import Header from './components/Header';
+import L from 'leaflet';
 
 function App() {
   const [coords, setCoords] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
+  let mapRef = React.useRef(null);
   useEffect(() => {
-    axios
-      .get(
-        'https://geo.ipify.org/api/v1?apiKey=at_bjYUbsHotYNNF7gAMlWD02nZdV8uy&ipAddress=8.8.8.8'
-      )
-      .then((res) => {
-        console.log(res.data.location);
-        // let { lat, lng } = res.data.location;
-        setCoords(res.data.location);
-      });
+    let startingCoordinates = L.latLng(34.0522, -118.2437);
+    console.log(startingCoordinates);
+
+    let map = L.map(
+      'map-container',
+      {
+        center: startingCoordinates,
+        zoom: 13,
+      },
+      []
+    );
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    mapRef.current = map;
+
+    // L.marker([51.5, -0.09])
+    //   .addTo(map)
+    //   .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    //   .openPopup();
   }, []);
+
+  useEffect(async () => {
+    let results = await axios.get(
+      `https://geo.ipify.org/api/v1?apiKey=at_bjYUbsHotYNNF7gAMlWD02nZdV8uy&ipAddress=${searchTerm}`
+    );
+    console.log('in app', results);
+
+    let newCoords = L.latLng(
+      results.data.location.lat,
+      results.data.location.lng
+    );
+    setCoords(results.data);
+    mapRef.current.panTo(newCoords);
+  }, [searchTerm]);
+
+  const submitSearch = async (data) => {
+    setSearchTerm(data);
+    // let results = await axios.get(
+    //   `https://geo.ipify.org/api/v1?apiKey=at_bjYUbsHotYNNF7gAMlWD02nZdV8uy&ipAddress=${data}`
+    // );
+    // console.log('in app', results);
+
+    // L.latLng(results.data.location.lat, results.data.location.lng);
+  };
   return (
     <div className="App">
-      <Header />
-      <Search />
-      <Map coordinates={coords} />
+      <Header submitSearch={submitSearch} />
+      <Search searchResults={coords} />
+      <div id="map-container"></div>
       {/* 
 
 Search for any IP address or domain
