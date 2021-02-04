@@ -1,15 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Rubik', 'Helvetica Neue', sans-serif;
 }
 
 .attribution {
@@ -20,22 +13,100 @@ code {
   color: hsl(228, 45%, 44%);
 }
 
-.search-box {
+.result-box {
   width: 70%;
-  height: 200px;
+  height: 175px;
   margin: auto;
   background: white;
   border-radius: 10px;
-  margin-top: -5rem;
+  margin-top: -1rem;
   position: absolute;
   top: 20%;
   left: 15%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
+.title {
+  text-align: left;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: hsl(0, 0%, 59%);
+  margin-bottom: 13px;
+}
+.result {
+  text-align: left;
+  font-weight: 500;
+  font-size: 26px;
+  color: hsl(0, 0%, 17%);
+}
+
+/* .result:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 50%;
+  border-right: 1px solid hsl(0, 0%, 59%);
+  right: 0;
+  top: 43px;
+} */
+
+.box {
+  padding: 2rem;
+  position: relative;
+  min-width: 17%;
+}
+
+.box:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 50%;
+  border-right: 1px solid hsl(0, 0%, 59%);
+  right: 0;
+  top: 43px;
+}
 #map-container {
   width: 100%;
   height: 50rem;
   z-index: -1;
+}
+
+.headline {
+  padding-top: 2rem;
+  font-weight: 500;
+  font-size: 32px;
+  text-align: center;
+  color: white;
+}
+.search-form {
+  display: flex;
+  justify-content: center;
+  height: 60px;
+  margin: auto;
+  margin-bottom: 50px;
+  width: 60%;
+}
+
+.input {
+  flex: 90%;
+  border: none;
+  border-radius: 14px 0px 0px 14px;
+  padding: 0 24px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 18px;
+  color: hsl(0, 0%, 17%);
+  outline: none;
+}
+::placeholder {
+  color: hsl(0, 0%, 59%);
+}
+.submit {
+  flex: 10%;
+  border: none;
+  outline: none;
+  border-radius: 0px 14px 14px 0px;
+  background: black url(./images/icon-arrow.svg) no-repeat center;
+  cursor: pointer;
 }

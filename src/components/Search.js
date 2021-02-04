@@ -1,22 +1,26 @@
 const Search = ({ searchResults }) => {
   console.log('searcREs', searchResults);
   return (
-    <div className="search-box">
-      <div>
-        <p>IP Address</p>
-        <p>{searchResults.ip}</p>
+    <div className="result-box">
+      <div className="box">
+        <p className="title">IP Address</p>
+        <p className="result">{searchResults.ip}</p>
       </div>
-      <div>
-        <p>Location</p>
-        <p>{searchResults.location.city}</p>
+      <div className="box">
+        <p className="title">Location</p>
+        <p className="result">
+          {searchResults.location && searchResults.location.city}
+        </p>
       </div>
-      <div>
-        <p>Timezone</p>
-        <p>{searchResults.location.timezone}</p>
+      <div className="box">
+        <p className="title">Timezone</p>
+        <p className="result">
+          {searchResults.location && searchResults.location.timezone}
+        </p>
       </div>
-      <div>
-        <p>ISP</p>
-        <p>{searchResults.isp}</p>
+      <div className="box">
+        <p className="title">ISP</p>
+        <p className="result">{searchResults.isp}</p>
       </div>
     </div>
   );
