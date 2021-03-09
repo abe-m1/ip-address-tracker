@@ -9,30 +9,30 @@ function App() {
   const [coords, setCoords] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   let mapRef = React.useRef(null);
+
   useEffect(async () => {
-    let startingCoordinates = L.latLng(34.0522, -118.2437);
-    console.log(startingCoordinates);
+    function fetchData() {
+      let startingCoordinates = L.latLng(34.0522, -118.2437);
+      console.log(startingCoordinates);
 
-    let map = L.map(
-      'map-container',
-      {
-        center: startingCoordinates,
-        zoom: 13,
-      },
-      []
-    );
+      let map = L.map(
+        'map-container',
+        {
+          center: startingCoordinates,
+          zoom: 13,
+        },
+        []
+      );
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
 
-    mapRef.current = map;
+      mapRef.current = map;
+    }
 
-    // L.marker([51.5, -0.09])
-    //   .addTo(map)
-    //   .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    //   .openPopup();
+    await fetchData();
   }, []);
 
   useEffect(async () => {
