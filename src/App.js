@@ -10,10 +10,11 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   let mapRef = React.useRef(null);
 
-  useEffect(async () => {
-    function fetchData() {
+  useEffect(() => {
+    let canceled = false;
+
+    if (!canceled) {
       let startingCoordinates = L.latLng(34.0522, -118.2437);
-      console.log(startingCoordinates);
 
       let map = L.map(
         'map-container',
@@ -31,11 +32,11 @@ function App() {
 
       mapRef.current = map;
     }
-
-    await fetchData();
+    return () => (canceled = true);
   }, []);
 
   useEffect(async () => {
+    let canceled = false;
     let results = await axios.get(
       `https://geo.ipify.org/api/v1?apiKey=at_bjYUbsHotYNNF7gAMlWD02nZdV8uy&ipAddress=${searchTerm}`
     );
@@ -45,8 +46,11 @@ function App() {
       results.data.location.lat,
       results.data.location.lng
     );
-    setCoords(results.data);
+    if (!canceled) {
+      setCoords(results.data);
+    }
     mapRef.current.panTo(newCoords);
+    return () => (canceled = true);
   }, [searchTerm]);
 
   const submitSearch = async (data) => {
