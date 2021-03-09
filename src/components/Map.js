@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import L from 'leaflet';
 const Map = (props) => {
-  let map;
   useEffect(() => {
     console.log('load');
     // map = L.map(

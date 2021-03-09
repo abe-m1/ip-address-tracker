@@ -1,9 +1,7 @@
-import logo from './logo.svg';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 import Search from './components/Search';
-import Map from './components/Map';
 import Header from './components/Header';
 import L from 'leaflet';
 
@@ -11,7 +9,7 @@ function App() {
   const [coords, setCoords] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   let mapRef = React.useRef(null);
-  useEffect(() => {
+  useEffect(async () => {
     let startingCoordinates = L.latLng(34.0522, -118.2437);
     console.log(startingCoordinates);
 
