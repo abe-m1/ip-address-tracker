@@ -11,32 +11,26 @@ function App() {
   let mapRef = React.useRef(null);
 
   useEffect(() => {
-    let canceled = false;
+    let startingCoordinates = L.latLng(34.0522, -118.2437);
 
-    if (!canceled) {
-      let startingCoordinates = L.latLng(34.0522, -118.2437);
+    let map = L.map(
+      'map-container',
+      {
+        center: startingCoordinates,
+        zoom: 13,
+      },
+      []
+    );
 
-      let map = L.map(
-        'map-container',
-        {
-          center: startingCoordinates,
-          zoom: 13,
-        },
-        []
-      );
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
-
-      mapRef.current = map;
-    }
-    return () => (canceled = true);
+    mapRef.current = map;
   }, []);
 
   useEffect(async () => {
-    let canceled = false;
     let results = await axios.get(
       `https://geo.ipify.org/api/v1?apiKey=at_bjYUbsHotYNNF7gAMlWD02nZdV8uy&ipAddress=${searchTerm}`
     );
@@ -46,11 +40,8 @@ function App() {
       results.data.location.lat,
       results.data.location.lng
     );
-    if (!canceled) {
-      setCoords(results.data);
-    }
+    setCoords(results.data);
     mapRef.current.panTo(newCoords);
-    return () => (canceled = true);
   }, [searchTerm]);
 
   const submitSearch = async (data) => {
